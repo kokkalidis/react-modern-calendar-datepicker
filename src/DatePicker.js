@@ -62,12 +62,13 @@ const DatePicker = ({
   const handleBlur = e => {
     e.persist();
     if (!isCalendarOpen) return;
-    const isInnerElementFocused = calendarContainerElement.current.contains(e.relatedTarget);
+    const target = e.relatedTarget || document.activeElement;
+    const isInnerElementFocused = calendarContainerElement.current.contains(target);
     if (shouldPreventToggle.current) {
       shouldPreventToggle.current = false;
       inputElement.current.focus();
-    } else if (isInnerElementFocused && e.relatedTarget) {
-      e.relatedTarget.focus();
+    } else if (isInnerElementFocused && target) {
+      target.focus();
     } else {
       setCalendarVisiblity(false);
     }
